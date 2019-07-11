@@ -8,9 +8,7 @@ import exceptions.birdStore.BirdsInAreaNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,12 +28,17 @@ public class BirdStoreController
 
     @RequestMapping(value = {"/birdStore/remove"}, method = RequestMethod.DELETE)
     @ResponseBody
-    public String removeBird(String name)
+    public String removeBird(String name) throws BirdNotFoundException
     {
         logger.debug("Removing bird");
-        return BirdStore.getInstance().removeBird(name) ?
-               "Bird with name '" + name + "' was removed" :
-               "There is no bird with name '" + name + "'";
+        if (BirdStore.getInstance().removeBird(name))
+        {
+            return "Bird with name '" + name + "' was removed";
+        }
+        else
+        {
+            throw new BirdNotFoundException(name);
+        }
     }
 
     @RequestMapping(value = {"/birdStore/searchByName"}, method = RequestMethod.GET)

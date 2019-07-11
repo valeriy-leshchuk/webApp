@@ -17,32 +17,12 @@ public class MainExceptionHandler
 {
     private static final Logger logger = LoggerFactory.getLogger(BirdStoreController.class);
 
-    @ExceptionHandler(BirdAlreadyExistException.class)
+    @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public String processException(BirdAlreadyExistException ex)
+    public String processException(Exception ex)
     {
-        String error = "Bird with name '" + ex.getBirdName() + "' already exist in store";
-        logger.error(error, ex);
-        return error;
-    }
-
-    @ExceptionHandler(BirdNotFoundException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ResponseBody
-    public String processException(BirdNotFoundException ex)
-    {
-        String error = "Bird with name '" + ex.getBirdName() + "' was not found in store";
-        logger.error(error, ex);
-        return error;
-    }
-
-    @ExceptionHandler(BirdsInAreaNotFoundException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ResponseBody
-    public String processException(BirdsInAreaNotFoundException ex)
-    {
-        String error = "No birds were found in area '" + ex.getArea() + "'";
+        String error = "Okay, Houston, we've had a problem here";
         logger.error(error, ex);
         return error;
     }
