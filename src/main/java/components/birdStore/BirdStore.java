@@ -42,6 +42,7 @@ public class BirdStore extends AbstractBirdStore
 
                 if (mapNameToBird.containsKey(bird.getName()))
                 {
+                    lock.unlock();
                     throw new BirdAlreadyExistException(bird.getName());
                 }
                 else
@@ -61,7 +62,7 @@ public class BirdStore extends AbstractBirdStore
                     }
                 }
             }
-            mapNameToLock.get(bird.getName()).unlock();
+            lock.unlock();
         }
     }
 
@@ -74,7 +75,8 @@ public class BirdStore extends AbstractBirdStore
         }
         synchronized (name)
         {
-            mapNameToLock.get(name).lock();
+            ReentrantLock lock = mapNameToLock.get(name);
+            lock.lock();
             {
                 Bird bird = mapNameToBird.get(name);
                 mapNameToBird.remove(name);
@@ -85,8 +87,7 @@ public class BirdStore extends AbstractBirdStore
                     mapLivingAreaToBirds.remove(bird.getLivingArea());
                 }
             }
-            ReentrantLock lock = mapNameToLock.get(name);
-            mapNameToLock.remove(lock);
+            mapNameToLock.remove(name);
             lock.unlock();
             return true;
         }
