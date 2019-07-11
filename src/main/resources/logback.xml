@@ -7,7 +7,7 @@
 		</encoder>
 	</appender>
 	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
-		<file>${user.home}/../logs/webApp.txt</file>
+		<file>./../logs/webApp.txt</file>
 		<append>true</append>
 		<encoder>
 			<pattern>${OUTPUT_PATTERN}</pattern>
