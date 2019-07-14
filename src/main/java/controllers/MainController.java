@@ -10,7 +10,7 @@ import responses.SuccessResponse;
 @RequestMapping (produces = MediaType.APPLICATION_JSON_VALUE)
 public class MainController
 {
-    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/"})
     public SuccessResponse returnDefaultResponse(String value)
     {
         return new SuccessResponse("yes, it works");
