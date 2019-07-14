@@ -15,68 +15,45 @@ public class BirdStore extends AbstractBirdStore
     @Getter private static final BirdStore instance = new BirdStore();
     private static final Map<String, Bird> mapNameToBird = new HashMap<>();
     private static final Map<String, List<Bird>> mapLivingAreaToBirds = new HashMap<>();
-    private static final Map<String, ReentrantLock> mapNameToLock = new HashMap<>();
 
     @Override
     public void addBird(Bird bird) throws BirdAlreadyExistException
     {
         synchronized (bird.getName())
         {
-            ReentrantLock lock;
-            synchronized (mapNameToLock)
+            if (mapNameToBird.containsKey(bird.getName()))
             {
-                if (!mapNameToLock.containsKey(bird.getName()))
+                throw new BirdAlreadyExistException(bird.getName());
+            }
+            else
+            {
+                mapNameToBird.put(bird.getName(), bird);
+
+                String livingArea = bird.getLivingArea();
+                if (mapLivingAreaToBirds.containsKey(livingArea))
                 {
-                    lock = new ReentrantLock();
-                    mapNameToLock.put(bird.getName(), lock);
+                    mapLivingAreaToBirds.get(livingArea).add(bird);
                 }
                 else
                 {
-                    lock = mapNameToLock.get(bird.getName());
+                    List<Bird> birsInLivingArea = new ArrayList<>();
+                    birsInLivingArea.add(bird);
+                    mapLivingAreaToBirds.put(livingArea, birsInLivingArea);
                 }
             }
-
-            lock.lock();//if some thread will be trying to remove bird
-            {
-                //try{Thread.sleep(5 * 1000);}catch (InterruptedException ex){} //to emulate long adding process
-
-                if (mapNameToBird.containsKey(bird.getName()))
-                {
-                    lock.unlock();
-                    throw new BirdAlreadyExistException(bird.getName());
-                }
-                else
-                {
-                    mapNameToBird.put(bird.getName(), bird);
-
-                    String livingArea = bird.getLivingArea();
-                    if (mapLivingAreaToBirds.containsKey(livingArea))
-                    {
-                        mapLivingAreaToBirds.get(livingArea).add(bird);
-                    }
-                    else
-                    {
-                        List<Bird> birsInLivingArea = new ArrayList();
-                        birsInLivingArea.add(bird);
-                        mapLivingAreaToBirds.put(livingArea, birsInLivingArea);
-                    }
-                }
-            }
-            lock.unlock();
         }
     }
 
     @Override
     public boolean removeBird(String name)
     {
-        if (!mapNameToLock.containsKey(name))
-        {
-            return false;
-        }
         synchronized (name)
         {
-            ReentrantLock lock = mapNameToLock.get(name);
-            lock.lock();
+            if (!mapNameToBird.containsKey(name))
+            {
+                return false;
+            }
+            else
             {
                 Bird bird = mapNameToBird.get(name);
                 mapNameToBird.remove(name);
@@ -86,14 +63,13 @@ public class BirdStore extends AbstractBirdStore
                 {
                     mapLivingAreaToBirds.remove(bird.getLivingArea());
                 }
+                return true;
             }
-            mapNameToLock.remove(name);
-            lock.unlock();
-            return true;
         }
     }
 
     @Override
+    //Most likely it doesn't make sense to throw an exception if there is no bird with given name.
     public Bird searchByName(String nameToSearch) throws BirdNotFoundException
     {
         Bird bird = mapNameToBird.get(nameToSearch);
@@ -108,6 +84,7 @@ public class BirdStore extends AbstractBirdStore
     }
 
     @Override
+    //Most likely it doesn't make sense to throw an exception if there are no birds living in given area.
     public List<Bird> searchByLivingArea(String livingAreaToFind) throws BirdsInAreaNotFoundException
     {
         List<Bird> birds = mapLivingAreaToBirds.get(livingAreaToFind);
