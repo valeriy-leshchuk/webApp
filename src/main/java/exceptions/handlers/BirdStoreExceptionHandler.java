@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import responses.ErrorResponse;
 
 @ControllerAdvice
 public class BirdStoreExceptionHandler
@@ -21,40 +22,44 @@ public class BirdStoreExceptionHandler
     @ExceptionHandler(BirdAlreadyExistException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public String processException(BirdAlreadyExistException ex)
+    public ErrorResponse processException(BirdAlreadyExistException ex)
     {
         String error = "Bird with name '" + ex.getBirdName() + "' already exist in store";
         logger.error(error, ex);
-        return error;
+        ErrorResponse response = new ErrorResponse(error);
+        return response;
     }
 
     @ExceptionHandler(BirdNotFoundException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public String processException(BirdNotFoundException ex)
+    public ErrorResponse processException(BirdNotFoundException ex)
     {
         String error = "Bird with name '" + ex.getBirdName() + "' was not found in store";
         logger.error(error, ex);
-        return error;
+        ErrorResponse response = new ErrorResponse(error);
+        return response;
     }
 
     @ExceptionHandler(BirdsInAreaNotFoundException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public String processException(BirdsInAreaNotFoundException ex)
+    public ErrorResponse processException(BirdsInAreaNotFoundException ex)
     {
         String error = "No birds were found in area '" + ex.getArea() + "'";
         logger.error(error, ex);
-        return error;
+        ErrorResponse response = new ErrorResponse(error);
+        return response;
     }
 
     @ExceptionHandler(BirdStoreBaseException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public String processException(BirdStoreBaseException ex)
+    public ErrorResponse processException(BirdStoreBaseException ex)
     {
         String error = "Error happened in bird store";
         logger.error(error, ex);
-        return error;
+        ErrorResponse response = new ErrorResponse(error);
+        return response;
     }
 }
