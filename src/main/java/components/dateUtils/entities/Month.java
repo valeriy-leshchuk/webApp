@@ -1,4 +1,4 @@
-package components.timeUtils.entities;
+package components.dateUtils.entities;
 
 import lombok.Getter;
 
@@ -17,8 +17,6 @@ public class Month
 
     /**
      * Create a Month with all Days
-     * @param year
-     * @param numInYear
      */
     public Month(int year, int numInYear)
     {
@@ -36,10 +34,6 @@ public class Month
 
     /**
      * Create a Month with Days in specified range.
-     * @param year
-     * @param numInYear
-     * @param fromDay
-     * @param toDay
      */
     public Month(int year, int numInYear, int fromDay, int toDay)
     {
@@ -53,7 +47,6 @@ public class Month
     {
         return Name.values()[num-1].toString();
     }
-
 
     private static List<Day> getListOfDaysInMonthInRange(int year, int numInYear, int fromDay, int toDay)
     {
@@ -69,5 +62,4 @@ public class Month
         }
         return result;
     }
-
 }

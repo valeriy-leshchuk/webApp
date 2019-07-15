@@ -1,7 +1,6 @@
-package components.timeUtils;
+package components.dateUtils;
 
-import components.timeUtils.entities.Day;
-import components.timeUtils.entities.Month;
+import components.dateUtils.entities.Month;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

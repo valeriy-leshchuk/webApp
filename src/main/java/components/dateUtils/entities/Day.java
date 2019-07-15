@@ -1,4 +1,4 @@
-package components.timeUtils.entities;
+package components.dateUtils.entities;
 
 import lombok.Getter;
 

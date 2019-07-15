@@ -1,7 +1,7 @@
 package controllers;
 
-import components.timeUtils.DateUtilsProvider;
-import components.timeUtils.entities.Month;
+import components.dateUtils.DateUtilsProvider;
+import components.dateUtils.entities.Month;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
