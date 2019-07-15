@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class MainExceptionHandler
 {
-    private static final Logger logger = LoggerFactory.getLogger(BirdStoreController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MainExceptionHandler.class);
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

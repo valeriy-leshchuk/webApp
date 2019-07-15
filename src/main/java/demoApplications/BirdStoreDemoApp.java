@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class BirdStoreDemoApp
 {
-    private static final Logger logger = LoggerFactory.getLogger(BirdStoreController.class);
+    private static final Logger logger = LoggerFactory.getLogger(BirdStoreDemoApp.class);
 
     public static void main(String[] args)
     {

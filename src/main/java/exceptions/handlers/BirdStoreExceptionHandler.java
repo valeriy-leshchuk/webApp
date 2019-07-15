@@ -17,7 +17,7 @@ import responses.ErrorResponse;
 @ControllerAdvice
 public class BirdStoreExceptionHandler
 {
-    private static final Logger logger = LoggerFactory.getLogger(BirdStoreController.class);
+    private static final Logger logger = LoggerFactory.getLogger(BirdStoreExceptionHandler.class);
 
     @ExceptionHandler(BirdAlreadyExistException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
