@@ -16,7 +16,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer
 {
     @Bean
-    public MethodValidationPostProcessor methodValidationPostProcessor() {
+    public MethodValidationPostProcessor methodValidationPostProcessor()
+    {
         return new MethodValidationPostProcessor();
     }
 
