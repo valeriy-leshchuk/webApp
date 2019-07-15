@@ -55,8 +55,7 @@ public final class DateUtilsProvider
         {
             String year = String.valueOf(ldFrom.getYear());
             String month = Month.getMonthNameFromNumber(ldFrom.getMonthValue());
-            String day = String.valueOf(ldFrom.getDayOfMonth());
-            result.add(year + "-" + month + "-" + day);
+            result.add(year + "-" + month);
             ldFrom = ldFrom.plusMonths(1);
         }
         return result;
