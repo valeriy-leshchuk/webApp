@@ -7,7 +7,6 @@ import exceptions.birdStore.BirdNotFoundException;
 import exceptions.birdStore.BirdsInAreaNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import responses.SuccessResponse;
@@ -17,7 +16,7 @@ import java.util.List;
 
 @RestController
 @Validated
-@RequestMapping(value = {"/birdStore"}, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/birdStore")
 public class BirdStoreController
 {
     private static final Logger logger = LoggerFactory.getLogger(BirdStoreController.class);
