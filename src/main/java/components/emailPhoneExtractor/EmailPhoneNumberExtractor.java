@@ -1,4 +1,4 @@
-package components;
+package components.emailPhoneExtractor;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
