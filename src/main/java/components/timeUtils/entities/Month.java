@@ -1,6 +1,6 @@
 package components.timeUtils.entities;
 
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,10 +10,10 @@ public class Month
 {
     enum Name {Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec}
 
-    private String name;
-    private int num;
-    private int year;
-    private List<Day> days;
+    @Getter private String name;
+    @Getter private int numInYear;
+    @Getter private int year;
+    @Getter private List<Day> days;
 
     /**
      * Create a Month with all Days
@@ -23,7 +23,7 @@ public class Month
     public Month(int year, int numInYear)
     {
         name = getMonthNameFromNumber(numInYear);
-        num=numInYear;
+        this.numInYear =numInYear;
         this.year = year;
 
         int lastDayOfMonth = LocalDate.of(year, numInYear, 1)
@@ -43,6 +43,10 @@ public class Month
      */
     public Month(int year, int numInYear, int fromDay, int toDay)
     {
+        name = getMonthNameFromNumber(numInYear);
+        this.numInYear =numInYear;
+        this.year = year;
+        days = getListOfDaysInMonthInRange(year, numInYear, fromDay, toDay);
     }
 
     public static String getMonthNameFromNumber(int num)
@@ -57,9 +61,12 @@ public class Month
         LocalDate ldTo = LocalDate.of(year, numInYear, toDay);
         List<Day> result = new ArrayList<>();
 
-
-        //
-
+        while (ldFrom.compareTo(ldTo)<=0)
+        {
+            Day day = new Day(ldFrom.getDayOfWeek().getValue(), ldFrom.getDayOfMonth());
+            result.add(day);
+            ldFrom = ldFrom.plusDays(1);
+        }
         return result;
     }
 

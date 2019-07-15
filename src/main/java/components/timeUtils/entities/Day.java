@@ -1,17 +1,19 @@
 package components.timeUtils.entities;
 
+import lombok.Getter;
+
 public class Day
 {
     enum Name {Mon, Tue, Wed, Thu, Fri, Sat, Sun}
 
-    private int numInWeek;
-    private int numInmonth;
-    private String name;
+    @Getter private int numInWeek;
+    @Getter private int numInMonth;
+    @Getter private String name;
 
     public Day(int numInWeek, int numInMonth)
     {
         this.numInWeek = numInWeek;
-        this.numInmonth = numInmonth;
+        this.numInMonth = numInMonth;
         this.name = getDayNameFromNumber(numInWeek);
     }
 

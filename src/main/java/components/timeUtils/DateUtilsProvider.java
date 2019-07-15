@@ -10,18 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class DateUtilsProvider
+public final class DateUtilsProvider
 {
 
-    public List<Month> getMonthes(int fiscalDateFrom, int fiscalDateTo)
+    public static List<Month> getMonthes(int fiscalDateFrom, int fiscalDateTo)
     {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMM");
+        fiscalDateFrom = fiscalDateFrom*100+1;//to convert it to yyyyMM01
+        fiscalDateTo = fiscalDateTo*100+1;//to convert it to yyyyMM01
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDate ldFrom = LocalDate.parse(String.valueOf(fiscalDateFrom), dtf);
         LocalDate ldTo = LocalDate.parse(String.valueOf(fiscalDateTo), dtf);
 
         List<Month> result = new ArrayList<>();
-
-        while (!ldFrom.equals(ldTo))
+        while(ldFrom.compareTo(ldTo)<=0)
         {
             Month month = new Month(ldFrom.getYear(), ldFrom.getMonthValue());
             result.add(month);
@@ -31,7 +33,7 @@ public class DateUtilsProvider
     }
 
 
-    public Month getDayInfo(int year, int dayInYear)
+    public static Month getDayInfo(int year, int dayInYear)
     {
         LocalDate ld = LocalDate.of(year, 1, 1);
         ld = ld.plusDays(dayInYear);
@@ -40,14 +42,17 @@ public class DateUtilsProvider
     }
 
 
-    public List<String> getMonthesFormatted(int fiscalDateFrom, int fiscalDateTo)
+    public static List<String> getMonthesFormatted(int fiscalDateFrom, int fiscalDateTo)
     {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMM");
+        fiscalDateFrom = fiscalDateFrom*100+1;//to convert it to yyyyMM01
+        fiscalDateTo = fiscalDateTo*100+1;//to convert it to yyyyMM01
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDate ldFrom = LocalDate.parse(String.valueOf(fiscalDateFrom), dtf);
         LocalDate ldTo = LocalDate.parse(String.valueOf(fiscalDateTo), dtf);
 
         List<String> result = new ArrayList<>();
-        while (!ldFrom.equals(ldTo))
+        while(ldFrom.compareTo(ldTo) <=0)
         {
             String year = String.valueOf(ldFrom.getYear());
             String month = Month.getMonthNameFromNumber(ldFrom.getMonthValue());
@@ -57,11 +62,8 @@ public class DateUtilsProvider
         }
         return result;
     }
+
+    private DateUtilsProvider()
+    {
+    }
 }
-
-
-
-
-
-
-
